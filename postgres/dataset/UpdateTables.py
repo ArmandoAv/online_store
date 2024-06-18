@@ -1,4 +1,4 @@
-# Codigo SQL con los updates de los importes
+# Queries with amount updates
 
 update_details = """UPDATE ORDERDETAILS AS T1
 SET    UNITPRICE = T2.PRICE

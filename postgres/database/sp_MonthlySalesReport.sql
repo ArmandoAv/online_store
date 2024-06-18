@@ -1,5 +1,5 @@
 -----------------------------------------------------------
-------------- PROCEDURE SP_MONTHLYSALESREPORT -------------
+------------- SP_MONTHLYSALESREPORT PROCEDURE -------------
 -----------------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE SP_MONTHLYSALESREPORT(
@@ -9,7 +9,7 @@ CREATE OR REPLACE PROCEDURE SP_MONTHLYSALESREPORT(
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    RAISE NOTICE 'Ejecutando el store sp_MonthlySalesReport para el periodo: % a %', STARTDATE, ENDDATE;
+    RAISE NOTICE 'Running sp_MonthlySalesReport procedure for the period: % to %', STARTDATE, ENDDATE;
 
     DELETE 
 	FROM   MONTHLYSALESREPORT

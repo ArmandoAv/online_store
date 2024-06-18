@@ -3,7 +3,7 @@ from faker import Faker
 from datetime import datetime
 from decouple import config
 
-# Conexion a la base de datos PostgreSQL
+# Connection to the PostgreSQL database
 conn = psycopg2.connect(
     dbname=str(config('DB_NAME')),
     user=str(config('DB_USR')),
@@ -12,43 +12,43 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor()
 
-# Funcion para crear la secuencia
+# Function to create the sequence
 def create_sequence():
     try:
         cursor.execute("CREATE SEQUENCE customer_id_seq START 1 INCREMENT 1")
         conn.commit()
-        print("Secuencia 'customer_id_seq' creada correctamente en PostgreSQL.")
+        print("customer_id_seq sequence successfully created in PostgreSQL.")
     
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al crear la secuencia:", e)
-        # Cerrar la conexion
+        print("Error creating sequence:", e)
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Funcion para elminiar la secuencia
+# Function to drop the sequence
 def drop_sequence():
     try:
         cursor.execute("DROP SEQUENCE customer_id_seq")
         conn.commit()
-        print("Secuencia 'customer_id_seq' elminada correctamente en PostgreSQL.")
+        print("customer_id_seq sequence successfully droped in PostgreSQL.")
     
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al eliminar la secuencia:", e)
-        # Cerrar la conexion
+        print("Error creating sequence:", e)
+        # Closed connection
         cursor.close()
         conn.close()
     
     finally:
-        # Cerrar la conexion
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Crear un generador de datos falsos
+# Create a fake data generator
 fake = Faker()
 
-# Funcion para generar datos aleatorios de clientes
+# Function to generate random order data
 def generate_customers(num_customers):
     try:
         for _ in range(num_customers):
@@ -57,27 +57,26 @@ def generate_customers(num_customers):
             email = fake.email()
             joindate = fake.date_time_between_dates(datetime(2023, 1, 1), datetime.now())
             
-            # Insertar cliente utilizando la secuencia customer_id_seq
             cursor.execute("""
                 INSERT INTO CUSTOMERS (CUSTOMERID, FIRSTNAME, LASTNAME, EMAIL, JOINDATE)
                 VALUES (NEXTVAL('customer_id_seq'), %s, %s, %s, %s)
             """, (firstname, lastname, email, joindate))
             conn.commit()
         
-        print("Datos insertados correctamente en la base de datos.")
+        print("Data successfully inserted into the database.")
     
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al insertar datos:", e)
-        # Cerrar la conexion
+        print("Error inserting data:", e)
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Creacion de la secuencia
+# Sequence creation
 create_sequence()
     
-# Generar datos de customers
+# Generate customer data
 generate_customers(5001)
     
-# Eliminacion de la secuencia
+# Sequence drop
 drop_sequence()

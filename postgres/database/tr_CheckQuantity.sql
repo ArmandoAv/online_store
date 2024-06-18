@@ -1,5 +1,5 @@
 ---------------------------------------------------
-------------- FUNCTION CHECK_QUANTITY -------------
+------------- CHECK_QUANTITY FUNCTION -------------
 ---------------------------------------------------
 
 CREATE OR REPLACE FUNCTION FN_CHECKQUANTITY()

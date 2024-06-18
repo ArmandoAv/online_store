@@ -4,7 +4,7 @@ from faker import Faker
 from datetime import datetime
 from decouple import config
 
-# Conexion a la base de datos PostgreSQL
+# Connection to the PostgreSQL database
 conn = psycopg2.connect(
     dbname=str(config('DB_NAME')),
     user=str(config('DB_USR')),
@@ -13,43 +13,43 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor()
 
-# Funcion para crear las secuencias
+# Function to create the sequence
 def create_sequence():
     try:
         cursor.execute("CREATE SEQUENCE order_id_seq START 1 INCREMENT 1")
         conn.commit()
-        print("Secuencia 'order_id_seq' creada correctamente en PostgreSQL.")
+        print("order_id_seq sequence successfully created in PostgreSQL.")
     
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al crear la secuencia:", e)
-        # Cerrar la conexion
+        print("Error creating sequence:", e)
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Funcion para elminiar las secuencias
+# Function to drop the sequence
 def drop_sequence():
     try:
         cursor.execute("DROP SEQUENCE order_id_seq")
         conn.commit()
-        print("Secuencia 'order_id_seq' elminada correctamente en PostgreSQL.")
+        print("order_id_seq sequence successfully droped in PostgreSQL.")
     
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al eliminar la secuencia:", e)
-        # Cerrar la conexion
+        print("Error creating sequence:", e)
+        # Closed connection
         cursor.close()
         conn.close()
     
     finally:
-        # Cerrar la conexion
+        # Closed connection
         cursor.close()
         conn.close()
 
 # Crear un generador de datos falsos
 fake = Faker()
 
-# Funcion para generar datos aleatorios de ordenes y detalles de ordenes
+# Function to generate random order data
 def generate_orders_and_details(num_orders):
     try:
         cursor.execute("SELECT MAX(CUSTOMERID) AS CUSTOMERID FROM CUSTOMERS")
@@ -60,27 +60,26 @@ def generate_orders_and_details(num_orders):
             order_date = fake.date_time_between(start_date=datetime(2023, 1, 1), end_date=datetime.now())
             total_amount = 0
             
-            # Insertar orden
             cursor.execute("""
                 INSERT INTO ORDERS (ORDERID, CUSTOMERID, ORDERDATE, TOTALAMOUNT)
                 VALUES (NEXTVAL('order_id_seq'), %s, %s, %s)
                 RETURNING ORDERID
             """, (customer_id, order_date, total_amount))
             
-        print("Datos insertados correctamente en la base de datos.")
+        print("Data successfully inserted into the database.")
 
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al insertar datos:", e)
-        # Cerrar la conexion
+        print("Error inserting data:", e)
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Creacion de las secuencias
+# Sequence creation
 create_sequence()
 
-# Generar datos de ordenes y detalle de ordenes
+# Generate order data
 generate_orders_and_details(40000)
 
-# Eliminacion de la secuencia
+# Sequence drop
 drop_sequence()

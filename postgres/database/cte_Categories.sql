@@ -1,6 +1,3 @@
--------------------------------------------------------
-------------- FUNCTION FN_ACTIVECUSTOMERS -------------
--------------------------------------------------------
 ---------------------------------------------------
 ------------- COMMON TABLE EXPRESSION -------------
 ---------------------------------------------------
@@ -16,12 +13,12 @@ WITH PRODUCT_CATEGORIES AS (
     INNER JOIN ORDERS AS ORD 
 	ON    DET.ORDERID = ORD.ORDERID
     WHERE EXTRACT(YEAR FROM ORD.ORDERDATE) = 2023
-    GROUP BY PRD.CATEGORY, 
-	      YEAR
 )
 SELECT CATEGORY,
        YEAR,
 	   SUM(QUANTITY) AS TOTALQUANTITY,
        SUM(TOTALAMOUNT) AS TOTALAMOUNT
 FROM PRODUCT_CATEGORIES
+GROUP BY CATEGORY,
+       YEAR
 ORDER BY CATEGORY;

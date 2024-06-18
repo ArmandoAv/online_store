@@ -1,5 +1,5 @@
 ---------------------------------------------------------
-------------- FUNCTION FN_CALCULATEDISCOUNT -------------
+------------- FN_CALCULATEDISCOUNT FUNCTION -------------
 ---------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION FN_CALCULATEDISCOUNT(

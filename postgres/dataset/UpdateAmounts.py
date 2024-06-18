@@ -2,7 +2,7 @@ import psycopg2
 from UpdateSQL import *
 from decouple import config
 
-# Conexion a la base de datos PostgreSQL
+# Connection to the PostgreSQL database
 conn = psycopg2.connect(
     dbname=str(config('DB_NAME')),
     user=str(config('DB_USR')),
@@ -11,28 +11,28 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor()
 
-# Funcion para actualizar los montos
+# Function to update the amounts
 def update_amount():
     try:
         cursor.execute(update_details)
         conn.commit()
-        print("Se actualiza el precio unitario correctamente")
+        print("The unit price is updated correctly.")
 
         cursor.execute(update_orders)
         conn.commit()
-        print("Se actualiza el monto total correctamente")
+        print("The total amount is updated correctly.")
 
     except psycopg2.Error as e:
         conn.rollback()
-        print("Error al crear la secuencia:", e)
-        # Cerrar la conexion
+        print("Error updating amounts:", e)
+        # Closed connection
         cursor.close()
         conn.close()
     
     finally:
-        # Cerrar la conexion
+        # Closed connection
         cursor.close()
         conn.close()
 
-# Creacion de las secuencias
+# Sequence update
 update_amount()
