@@ -19,9 +19,11 @@ The scripts required to create the database can be found in the database folder.
 
 Python 3.8 or higher is required to generate test datasets for the model's created tables.
 
-## Creación del proyecto
+## Project creation
 
 Open a Windows terminal, in the path where you want to create this project, run the following command
+> [!NOTE]
+> The next step must be done if you have not done it before with the steps in the sqlserver folder, this is because it only has to be executed once.
 
 ```
 git clone https://github.com/ArmandoAv/online_store.git
