@@ -60,6 +60,7 @@ If you don't have an virtual environment, you need to run the following commands
 ```
 cd sqlserver
 python -m venv sqlvenv
+sqlvenv\Scripts\activate
 ```
 
 If you have an virtual environment, you must run the following commands:
@@ -98,14 +99,14 @@ setuptools      65.5.0
 six             1.16.0
 ```
 
-To deactivate the virtual environment you must execute the following command
+If you want to deactivate the virtual environment, you must execute the following command:
 
 ```
 deactivate
 ```
 
 > [!NOTE]
-> Because you have another part with different Python packages, it is necessary to disable the virtual environment or run the other part from a new terminal where this environment has not been activated.
+> Because the project is divided into two, it is necessary to disable the virtual environment if you want to run the Postgres part or open a new terminal and enable the other virtual environment.
 
 A file called .env must be generated in the same path
 

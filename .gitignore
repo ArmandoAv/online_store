@@ -1,6 +1,6 @@
 postgres/.env
 postgres/dataset/__pycache__/
-postgres/posenv/
+postgres/posvenv/
 sqlserver/.env
 sqlserver/dataset/__pycache__/
-sqlserver/sqlenv/
+sqlserver/sqlvenv/
