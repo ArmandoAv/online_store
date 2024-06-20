@@ -2,7 +2,7 @@ Files in this folder contain the scripts necessary to create the database object
 
 They should be used in the following order:
 
-1. DataModel.sql
+1. postgres_DataModel.sql
 
 This script generates the tables, indexes, and a view for the online store model.
 
@@ -32,7 +32,7 @@ This view shows the CUSTOMERID, FIRSTNAME, LASTNAME, EMAIL, the number of orders
 2. sp_MonthlySalesReport.sql
 
 This script creates a store procedure that helps generate a monthly sales report.
-The store receives two input parameters (FECHA_INICIO, FECHA_FIN).
+The store receives two input parameters (STARTDATE, ENDDATE).
 
 Since this script is a store procedure, a sales report table is created
 MONTHLYSALESREPORT
@@ -53,8 +53,7 @@ To perform the required action, a function called fn_CheckQuantity is created to
 This script creates a function called fn_CalculateDiscount, which helps to calculate possible discounts
 According to the following rules:
 
-
-, apply a 10% discount.
+If the quantity is greater than or equal to 10, apply a 10% discount.
 If the quantity is greater than or equal to 20, apply a 20% discount.
 If the quantity is greater than or equal to 50, apply a 25% discount.
 

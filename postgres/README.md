@@ -49,22 +49,58 @@ This tool helps you install and manage Python packages.
 
 Whenever Python is used in a project, it is recommended to create a virtual environment so that the necessary packages can be installed to run Python scripts. This is also done to have control of the packages that are needed and not install extra packages from other developments.
 
-To create and activate the virtual environment, you need to run the following commands:
+If you already have the project with the steps in the sqlserver folder. Open a Windows terminal, in the online_store folder.
+If you don't have an virtual environment, you need to run the following commands:
 
 ```
 cd postgres
-python -m venv pvenv
-pvenv\Scripts\activate
-
+python -m venv posvenv
 ```
 
-Once the environment has been activated, you must run the following command
+If you have an virtual environment, you must run the following commands:
+
+```
+cd postgres
+posvenv\Scripts\activate
+```
+
+Once the environment has been activated, you must run the following command:
 
 ```
 pip install -r requirements.txt
 ```
 
 This command will install the necessary packages to be able to load the data sets into the previously created tables.
+
+With the following command you can see the list of packages installed in the virtual environment
+
+```
+pip list
+```
+
+This command should display the following list, with the same or similar versions of the installed packages
+
+```
+Package         Version
+--------------- -----------
+Faker           25.8.0
+pip             24.0
+psycopg2        2.9.9
+python-dateutil 2.9.0.post0
+python-decouple 3.8
+python-dotenv   1.0.1
+setuptools      65.5.0
+six             1.16.0
+```
+
+To deactivate the virtual environment you must execute the following command:
+
+```
+deactivate
+```
+
+> [!NOTE]
+> Because you have another part with different Python packages, it is necessary to disable the virtual environment or run the other part from a new terminal where this environment has not been activated.
 
 A file called .env must be generated in the same path
 
@@ -83,14 +119,14 @@ Once you have completed these steps and the steps that indicate the Readme.txt f
 
 ```
 cd dataset
-python CustomerDataSet.py
-python ProductDataSet.py
-python OrderDataSet.py
-python OrderDetailDataSet.py
+python CustomerDataSetPostgres.py
+python ProductDataSetPostgres.py
+python OrderDataSetPostgres.py
+python OrderDetailDataSetPostgres.py
 ```
 
 Finally, the following command must be executed to update some columns of amounts, since they are loaded with zeros.
 
 ```
-python UpdateSQL.py
+python UpdateAmountsPostgres.py
 ```

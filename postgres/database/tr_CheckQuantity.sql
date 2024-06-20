@@ -1,21 +1,21 @@
----------------------------------------------------
-------------- CHECK_QUANTITY FUNCTION -------------
----------------------------------------------------
+-----------------------------------------------------
+------------- FN_CHECKQUANTITY FUNCTION -------------
+-----------------------------------------------------
 
 CREATE OR REPLACE FUNCTION FN_CHECKQUANTITY()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.QUANTITY <= 0 THEN
-        RAISE EXCEPTION 'El valor en la columna QUANTITY no puede ser negativa o cero';
+        RAISE EXCEPTION 'Quantity cannot be 0 or negative.';
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 
-----------------------------------------------------------
-------------- TRIGGER CHECK_QUANTITY_TRIGGER -------------
-----------------------------------------------------------
+----------------------------------------------------
+------------- TR_CHECKQUANTITY_TRIGGER -------------
+----------------------------------------------------
 
 CREATE TRIGGER TR_CHECKQUANTITY
 	BEFORE INSERT ON ORDERDETAILS
