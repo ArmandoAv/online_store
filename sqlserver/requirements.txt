@@ -1,0 +1,4 @@
+Faker
+pyodbc
+python-decouple
+python-dotenv

@@ -1,0 +1,21 @@
+---------------------------------------------------------
+------------- FN_CALCULATEDISCOUNT FUNCTION -------------
+---------------------------------------------------------
+
+CREATE FUNCTION FN_CALCULATEDISCOUNT(@PRODUCTID INT, @QUANTITY INT)
+RETURNS DECIMAL(5,2)
+AS
+BEGIN
+	DECLARE @DISCOUNT DECIMAL(5,2)
+	
+	IF @QUANTITY >= 50
+		SET @DISCOUNT = 0.25
+	ELSE IF @QUANTITY >= 20
+		SET @DISCOUNT = 0.20
+	ELSE IF @QUANTITY >= 10
+		SET @DISCOUNT = 0.10
+	ELSE 
+		SET @DISCOUNT = 0
+
+	RETURN @DISCOUNT
+END;
