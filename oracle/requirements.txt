@@ -1,0 +1,4 @@
+Faker
+cx_Oracle
+python-decouple
+python-dotenv

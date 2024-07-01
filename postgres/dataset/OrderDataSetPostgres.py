@@ -50,7 +50,7 @@ def drop_sequence():
 fake = Faker()
 
 # Function to generate random order data
-def generate_orders_and_details(num_orders):
+def generate_orders(num_orders):
     try:
         cursor.execute("SELECT MAX(CUSTOMERID) AS CUSTOMERID FROM CUSTOMERS")
         max_customer_ids = cursor.fetchone()[0]
@@ -78,7 +78,7 @@ def generate_orders_and_details(num_orders):
 create_sequence()
 
 # Generate order data
-generate_orders_and_details(40000)
+generate_orders(40000)
 
 # Sequence drop
 drop_sequence()

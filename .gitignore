@@ -4,3 +4,6 @@ postgres/posvenv/
 sqlserver/.env
 sqlserver/dataset/__pycache__/
 sqlserver/sqlvenv/
+oracle/.env
+oracle/dataset/__pycache__/
+oracle/oravenv/

@@ -1,15 +1,12 @@
-import pyodbc
+import cx_Oracle
 import random
 from faker import Faker
 from datetime import datetime
 from decouple import config
 
-# Connection to the SQL Server database
-conn = pyodbc.connect('DRIVER={SQL Server};'
-                      'SERVER=' + str(config('DB_HOST')) + ';'
-                      'DATABASE=' + str(config('DB_NAME')) + ';'
-                      'UID=' + str(config('DB_USR')) + ';'
-                      'PWD=' + str(config('DB_PWD')) + ';')
+# Connection to the Oracle database
+dsn = cx_Oracle.makedsn(str(config('DB_HOST')), str(config('DB_PORT')), service_name = str(config('DB_SERVICENAME')))
+conn = cx_Oracle.connect(user = str(config('DB_USR')), password = str(config('DB_PWD')), dsn = dsn)
 cursor = conn.cursor()
 
 # Function to create the sequence
@@ -17,9 +14,9 @@ def create_sequence():
     try:
         cursor.execute("CREATE SEQUENCE order_id_seq START WITH 1 INCREMENT BY 1")
         conn.commit()
-        print("order_id_seq sequence successfully created in SQL Server.")
+        print("order_id_seq sequence successfully created in Oracle.")
     
-    except pyodbc.Error as e:
+    except cx_Oracle.DatabaseError as e:
         conn.rollback()
         print("Error creating sequence:", e)
         # Closed connection
@@ -31,14 +28,11 @@ def drop_sequence():
     try:
         cursor.execute("DROP SEQUENCE order_id_seq")
         conn.commit()
-        print("order_id_seq sequence successfully droped in SQL Server.")
+        print("order_id_seq sequence successfully droped in Oracle.")
     
-    except pyodbc.Error as e:
+    except cx_Oracle.DatabaseError as e:
         conn.rollback()
         print("Error creating sequence:", e)
-        # Closed connection
-        cursor.close()
-        conn.close()
     
     finally:
         # Closed connection
@@ -61,12 +55,13 @@ def generate_orders(num_orders):
             
             cursor.execute("""
                 INSERT INTO ORDERS (ORDERID, CUSTOMERID, ORDERDATE, TOTALAMOUNT)
-                VALUES (NEXT VALUE FOR order_id_seq, ?, ?, ?)
+                VALUES (order_id_seq.NEXTVAL, :1, :2, :3)
             """, (customer_id, order_date, total_amount))
+            conn.commit()
             
         print("Data successfully inserted into the database.")
 
-    except pyodbc.Error as e:
+    except cx_Oracle.DatabaseError as e:
         conn.rollback()
         print("Error inserting data:", e)
         # Closed connection

@@ -49,7 +49,7 @@ This tool helps you install and manage Python packages.
 
 Whenever Python is used in a project, it is recommended to create a virtual environment so that the necessary packages can be installed to run Python scripts. This is also done to have control of the packages that are needed and not install extra packages from other developments.
 
-If you already have the project with the steps in the sqlserver folder. Open a Windows terminal, in the online_store folder.
+If you already have the project with the steps in the sqlserver or oracle folder. Open a Windows terminal, in the online_store folder.
 If you don't have an virtual environment, you need to run the following commands:
 
 ```
@@ -101,7 +101,7 @@ deactivate
 ```
 
 > [!NOTE]
-> Because the project is divided into two, it is necessary to disable the virtual environment if you want to run the SQL Server part or open a new terminal and enable the other virtual environment.
+> Because the project is divided into two, it is necessary to disable the virtual environment if you want to run the sqlserver or oracle part or open a new terminal and enable the other virtual environment.
 
 A file called .env must be generated in the same path
 

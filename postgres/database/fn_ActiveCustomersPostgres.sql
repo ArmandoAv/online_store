@@ -1,0 +1,30 @@
+-------------------------------------------------------------
+------------- FN_ACTIVECUSTOMERS TABLE FUNCTION -------------
+-------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION FN_ACTIVECUSTOMERS()
+RETURNS TABLE (
+    CUSTOMERID INTEGER,
+    FIRSTNAME VARCHAR(250),
+    LASTNAME VARCHAR(250),
+    EMAIL VARCHAR(250),
+    ORDERID INTEGER,
+    ORDERDATE DATE,
+    TOTALAMOUNT DECIMAL(20,2)
+)
+AS $$
+BEGIN
+    RETURN QUERY 
+    SELECT CUST.CUSTOMERID,
+           CUST.FIRSTNAME,
+           CUST.LASTNAME,
+           CUST.EMAIL,
+           ORD.ORDERID,
+           ORD.ORDERDATE,
+           ORD.TOTALAMOUNT
+    FROM CUSTOMERS AS CUST
+    INNER JOIN ORDERS AS ORD
+    ON    CUST.CUSTOMERID = ORD.CUSTOMERID
+    WHERE ORD.ORDERDATE > CURRENT_DATE - INTERVAL '6 MONTHS';
+END;
+$$ LANGUAGE plpgsql;
